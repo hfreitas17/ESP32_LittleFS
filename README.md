@@ -1,2 +1,26 @@
 # ESP32_LittleFS
 Sistema de Arquivos LittleFS no ESP32
+
+
+O LittleFS é um sistema de arquivos compacto e resiliente projetado especificamente para microcontroladores, sendo a escolha ideal para o ESP32 no ecossistema PlatformIO (substituindo o antigo SPIFFS). Ele é altamente resistente a falhas de energia e possui balanceamento de desgaste (wear leveling) para estender a vida útil da memória flash.
+
+
+1. Configuração do Projeto (platformio.ini)
+Para informar ao PlatformIO que você deseja usar o LittleFS como sistema de arquivos padrão para o upload de dados, adicione a linha board_build.filesystem = littlefs ao seu arquivo de configuração.
+
+
+2. Estrutura de Pastas para Upload de Arquivos
+Se você quiser enviar arquivos do seu computador (como HTML, CSS, JSON de configuração ou imagens) diretamente para a flash do ESP32:
+1. Crie uma pasta chamada data na raiz do seu projeto PlatformIO (no mesmo nível do arquivo platformio.ini).
+2. Coloque os arquivos que deseja enviar dentro dessa pasta. Exemplo: data/config.json.
+
+Como enviar a pasta data para o ESP32:
+• Pelo VS Code: Clique no ícone do PlatformIO (formiga na barra lateral) -> Expanda a sua placa (ex: env:esp32dev) -> Vá em Platform -> Clique em Upload Filesystem Image.
+
+Principais Comandos do LittleFS
+• LittleFS.open(path, mode): Abre um arquivo. Os modos comuns são FILE_READ, FILE_WRITE (sobrescreve) e FILE_APPEND (adiciona ao final).
+• LittleFS.exists(path): Retorna true se o arquivo existir no caminho especificado.
+• LittleFS.remove(path): Deleta o arquivo.
+• LittleFS.rename(pathFrom, pathTo): Renomeia ou move um arquivo.
+• LittleFS.format(): Apaga todos os dados e reformata a partição.
+
