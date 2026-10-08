@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Controle Avançado</title>
+    
+    <!-- Link para o arquivo CSS externo -->
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+    <!-- O restante do corpo (body) e script do Fetch API continuam EXATAMENTE iguais -->
+    <div class="card">
+        <h1>Controle de LED com ESP32</h1>
+        <p>Status do LED: <span id="status-led" class="status desligado">Carregando...</span></p>
+        <button class="btn btn-on" onclick="controlarLED('on')">LIGAR LED</button>
+        <button class="btn btn-off" onclick="controlarLED('off')">DESLIGAR LED</button>
+    </div>
+
+    <script>
+        function controlarLED(acao) {
+            fetch('/led/' + acao)
+                .then(response => response.text())
+                .then(novoStatus => atualizarInterface(novoStatus));
+        }
+        function buscarStatusAtual() {
+            fetch('/status')
+                .then(response => response.text())
+                .then(status => atualizarInterface(status));
+        }
+        function atualizarInterface(status) {
+            const el = document.getElementById('status-led');
+            el.innerText = status;
+            el.className = status === "LIGADO" ? "status ligado" : "status desligado";
+        }
+        window.onload = buscarStatusAtual;
+    </script>
+</body>
+</html>
